@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: recipebook
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: 
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  backend:
+    build: ./backend
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__Default: "Server=mysql;Port=3306;Database=recipebook;User=appuser;Password=;"
+    ports:
+      - "5113:8080"
+    depends_on:
+      - mysql
+
+  ef:
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    environment:
+      ConnectionStrings__Default: "Server=mysql;Port=3306;Database=recipebook;User=appuser;Password=;"
+      ASPNETCORE_ENVIRONMENT: Development
+    depends_on:
+      - mysql
+
+
+volumes:
+  mysql_data:

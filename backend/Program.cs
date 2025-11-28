@@ -1,41 +1,111 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using RecipeBook.Data;
+using System.Threading;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+var connectionString = builder.Configuration.GetConnectionString("Default")
+                        ?? builder.Configuration["ConnectionStrings:Default"]
+                        ?? throw new Exception("Connection string not found.");
+
+var serverVersion = new MySqlServerVersion(new Version(8, 4, 7));
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(connectionString, serverVersion));
+
+var jwtSection = builder.Configuration.GetSection("Jwt");
+var jwtKey = jwtSection["Key"];
+var jwtIssuer = jwtSection["Issuer"];
+var jwtAudience = jwtSection["Audience"];
+
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtIssuer,
+            ValidAudience = jwtAudience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey!))
+        };
+    });
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "RecipeBook API",
+        Version = "v1"
+    });
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod());
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors("AllowFrontend");
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+app.UseAuthentication();   
+app.UseAuthorization();   
 
-app.MapGet("/weatherforecast", () =>
+app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    const int maxRetries = 10;
+    for (int attempt = 1; attempt <= maxRetries; attempt++)
+    {
+        try
+        {
+            db.Database.EnsureCreated();
+            Console.WriteLine("Database schema ensured.");
+            break;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"EnsureCreated failed (attempt {attempt}/{maxRetries}): {ex.Message}");
+
+            if (attempt == maxRetries)
+            {
+                Console.WriteLine("Giving up on EnsureCreated. Starting app anyway.");
+                break;
+            }
+
+            Thread.Sleep(2000);
+        }
+    }
+}
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
