@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/vollarai/uni/sandbox/recipe_book/backend/backend.csproj": {}
+    "/app/backend.csproj": {}
   },
   "projects": {
-    "/Users/vollarai/uni/sandbox/recipe_book/backend/backend.csproj": {
+    "/app/backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/vollarai/uni/sandbox/recipe_book/backend/backend.csproj",
+        "projectUniqueName": "/app/backend.csproj",
         "projectName": "backend",
-        "projectPath": "/Users/vollarai/uni/sandbox/recipe_book/backend/backend.csproj",
-        "packagesPath": "/Users/vollarai/.nuget/packages/",
-        "outputPath": "/Users/vollarai/uni/sandbox/recipe_book/backend/obj/",
+        "projectPath": "/app/backend.csproj",
+        "packagesPath": "/root/.nuget/packages/",
+        "outputPath": "/app/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/vollarai/.nuget/NuGet/NuGet.Config"
+          "/root/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -37,8 +37,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "10.0.100"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -90,7 +89,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.416/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

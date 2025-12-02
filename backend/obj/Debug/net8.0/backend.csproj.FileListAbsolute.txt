@@ -7,7 +7,6 @@
 /Users/vollarai/uni/sandbox/recipe_book/backend/bin/Debug/net8.0/backend.dll
 /Users/vollarai/uni/sandbox/recipe_book/backend/bin/Debug/net8.0/backend.pdb
 /Users/vollarai/uni/sandbox/recipe_book/backend/bin/Debug/net8.0/Humanizer.dll
-/Users/vollarai/uni/sandbox/recipe_book/backend/bin/Debug/net8.0/Microsoft.AspNetCore.OpenApi.dll
 /Users/vollarai/uni/sandbox/recipe_book/backend/bin/Debug/net8.0/Microsoft.Bcl.AsyncInterfaces.dll
 /Users/vollarai/uni/sandbox/recipe_book/backend/bin/Debug/net8.0/Microsoft.CodeAnalysis.dll
 /Users/vollarai/uni/sandbox/recipe_book/backend/bin/Debug/net8.0/Microsoft.CodeAnalysis.CSharp.dll
@@ -211,3 +210,19 @@
 /app/obj/Debug/net8.0/backend.pdb
 /app/obj/Debug/net8.0/backend.genruntimeconfig.cache
 /app/obj/Debug/net8.0/ref/backend.dll
+/Users/vollarai/uni/sandbox/recipe_book/backend/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/vollarai/uni/sandbox/recipe_book/backend/bin/Debug/net8.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/vollarai/uni/sandbox/recipe_book/backend/bin/Debug/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/vollarai/uni/sandbox/recipe_book/backend/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll
+/Users/vollarai/uni/sandbox/recipe_book/backend/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.dll
+/Users/vollarai/uni/sandbox/recipe_book/backend/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/vollarai/uni/sandbox/recipe_book/backend/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
+/Users/vollarai/uni/sandbox/recipe_book/backend/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
+/app/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/app/bin/Debug/net8.0/Microsoft.IdentityModel.Abstractions.dll
+/app/bin/Debug/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/app/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll
+/app/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.dll
+/app/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/app/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
+/app/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll

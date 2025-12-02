@@ -9,9 +9,9 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("Default")
-                        ?? builder.Configuration["ConnectionStrings:Default"]
-                        ?? throw new Exception("Connection string not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+                        ?? builder.Configuration["ConnectionStrings:DefaultConnection"]
+                        ?? throw new Exception("Connection string 'DefaultConnection' not found.");
 
 var serverVersion = new MySqlServerVersion(new Version(8, 4, 7));
 
@@ -83,29 +83,7 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-    const int maxRetries = 10;
-    for (int attempt = 1; attempt <= maxRetries; attempt++)
-    {
-        try
-        {
-            db.Database.EnsureCreated();
-            Console.WriteLine("Database schema ensured.");
-            break;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"EnsureCreated failed (attempt {attempt}/{maxRetries}): {ex.Message}");
-
-            if (attempt == maxRetries)
-            {
-                Console.WriteLine("Giving up on EnsureCreated. Starting app anyway.");
-                break;
-            }
-
-            Thread.Sleep(2000);
-        }
-    }
+    db.Database.Migrate();
 }
 
 app.Run();
