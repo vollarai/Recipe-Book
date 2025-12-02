@@ -1,0 +1,6 @@
+**/appsettings*.json
+bin/
+obj/
+logs/
+node_modules/
+.env
