@@ -8,6 +8,8 @@ namespace backend.Dtos
         public string? Description { get; set; }
         public string? Ingredients { get; set; }
         public string? Steps { get; set; }
+        public IFormFile? Image { get; set; }
+        public string Category { get; set; } = "Other";
     }
 
     public class RecipeUpdateDto
@@ -16,6 +18,8 @@ namespace backend.Dtos
         public string? Description { get; set; }
         public string? Ingredients { get; set; }
         public string? Steps { get; set; }
+        public IFormFile? Image { get; set; }
+        public string Category { get; set; } = "Other";
     }
 
     public class RecipeResponseDto
@@ -26,5 +30,7 @@ namespace backend.Dtos
         public string? Ingredients { get; set; }
         public string? Steps { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string? ImageUrl { get; set; }
+        public string Category { get; set; } = "Other";
     }
 }

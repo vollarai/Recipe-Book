@@ -16,7 +16,7 @@ const loginSchema = Yup.object().shape({
 });
 
 export const LoginPage = () => {
-  const { setUser } = useUser();
+  const { setUser, setToken } = useUser();
   const navigate = useNavigate();
 
   const initialValues: LoginFormValues = {
@@ -33,6 +33,9 @@ export const LoginPage = () => {
         email: res.email,
         userName: res.userName || "",
       });
+
+      setToken(res.token);
+      localStorage.setItem("token", res.token); 
 
       toast.success("Logged in successfully");
       navigate("/recipes");

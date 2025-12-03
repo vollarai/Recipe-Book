@@ -49,7 +49,9 @@ namespace backend.Controllers
                     Description = r.Description,
                     Ingredients = r.Ingredients,
                     Steps = r.Steps,
-                    CreatedAt = r.CreatedAt
+                    CreatedAt = r.CreatedAt,
+                    ImageUrl = r.ImageUrl,
+                    Category = r.Category
                 })
                 .ToListAsync();
 
@@ -81,14 +83,17 @@ namespace backend.Controllers
                 Description = recipe.Description,
                 Ingredients = recipe.Ingredients,
                 Steps = recipe.Steps,
-                CreatedAt = recipe.CreatedAt
+                CreatedAt = recipe.CreatedAt,
+                ImageUrl = recipe.ImageUrl,
+                Category = recipe.Category
             };
 
             return Ok(dto);
         }
-
+        
         [HttpPost]
-        public async Task<ActionResult<RecipeResponseDto>> CreateRecipe([FromBody] RecipeCreateDto dto)
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<RecipeResponseDto>> CreateRecipe([FromForm] RecipeCreateDto dto)
         {
             var userId = GetUserId();
             if (userId == null)
@@ -102,8 +107,27 @@ namespace backend.Controllers
                 Description = dto.Description,
                 Ingredients = dto.Ingredients,
                 Steps = dto.Steps,
+                Category = dto.Category,
                 UserId = userId.Value
             };
+
+            if (dto.Image != null)
+            {
+                var folder = Path.Combine("wwwroot", "images");
+
+                if (!Directory.Exists(folder))
+                    Directory.CreateDirectory(folder);
+
+                var fileName = Guid.NewGuid() + Path.GetExtension(dto.Image.FileName);
+                var fullPath = Path.Combine(folder, fileName);
+
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    await dto.Image.CopyToAsync(stream);
+                }
+
+                recipe.ImageUrl = "/images/" + fileName;
+            }
 
             _dbContext.Recipes.Add(recipe);
             await _dbContext.SaveChangesAsync();
@@ -115,14 +139,17 @@ namespace backend.Controllers
                 Description = recipe.Description,
                 Ingredients = recipe.Ingredients,
                 Steps = recipe.Steps,
-                CreatedAt = recipe.CreatedAt
+                CreatedAt = recipe.CreatedAt,
+                ImageUrl = recipe.ImageUrl,
+                Category = recipe.Category
             };
-
+            
             return CreatedAtAction(nameof(GetRecipe), new { id = recipe.Id }, response);
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateRecipe(int id, [FromBody] RecipeUpdateDto dto)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UpdateRecipe(int id, [FromForm] RecipeUpdateDto dto)
         {
             var userId = GetUserId();
             if (userId == null)
@@ -143,9 +170,26 @@ namespace backend.Controllers
             recipe.Description = dto.Description;
             recipe.Ingredients = dto.Ingredients;
             recipe.Steps = dto.Steps;
+            recipe.Category = dto.Category;
+
+            if (dto.Image != null)
+            {
+                var folder = Path.Combine("wwwroot", "images");
+                if (!Directory.Exists(folder))
+                    Directory.CreateDirectory(folder);
+
+                var fileName = Guid.NewGuid() + Path.GetExtension(dto.Image.FileName);
+                var fullPath = Path.Combine(folder, fileName);
+
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    await dto.Image.CopyToAsync(stream);
+                }
+
+                recipe.ImageUrl = "/images/" + fileName;
+            }
 
             await _dbContext.SaveChangesAsync();
-
             return NoContent();
         }
 

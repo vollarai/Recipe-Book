@@ -76,7 +76,9 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowFrontend");
 
 app.UseAuthentication();   
-app.UseAuthorization();   
+app.UseAuthorization();  
+
+app.UseStaticFiles();
 
 app.MapControllers();
 

@@ -17,7 +17,10 @@ namespace RecipeBook.Models
         public string? Ingredients { get; set; }
 
         public string? Steps { get; set; }
+        public string Category { get; set; } = "Other";
 
+        public string? ImageUrl { get; set; }
+        
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         [Required]

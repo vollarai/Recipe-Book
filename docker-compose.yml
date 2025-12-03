@@ -18,7 +18,7 @@ services:
     build: ./backend
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ConnectionStrings__DefaultConnection: "Server=mysql;Port=3306;Database=recipebook;User=appuser;Password=apppass;"
+      ConnectionStrings__DefaultConnection: 'Server=mysql;Port=3306;Database=recipebook;User=appuser;Password=apppass;'
     ports:
       - "5113:8080"
     depends_on:
@@ -30,7 +30,7 @@ services:
     volumes:
       - ./backend:/app
     environment:
-      ConnectionStrings__DefaultConnection: "Server=mysql;Port=3306;Database=recipebook;User=appuser;Password=apppass;"
+      ConnectionStrings__DefaultConnection: 'Server=mysql;Port=3306;Database=recipebook;User=appuser;Password=apppass;'
       ASPNETCORE_ENVIRONMENT: Development
     depends_on:
       - mysql

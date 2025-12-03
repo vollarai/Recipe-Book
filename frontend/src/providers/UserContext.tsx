@@ -1,19 +1,19 @@
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
 import type { User } from "../models/user";
+import type { UserContextType } from "../models/userContextType";
 
-interface UserContextType {
-  user: User | null;
-  setUser: (u: User | null) => void;
-}
 
 const UserContext = createContext<UserContextType | null>(null);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(() => {
+    return localStorage.getItem("token");
+  });
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, token, setToken }}>
       {children}
     </UserContext.Provider>
   );
