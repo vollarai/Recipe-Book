@@ -3,9 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { useUser } from "../providers/UserContext";
 import type { Recipe } from "../models/recipe";
-import { LuUtensils, LuHeart, LuArrowLeft } from "react-icons/lu";
+import { LuUtensils, LuHeart, LuArrowLeft, LuTrash } from "react-icons/lu";
 import { useFavorites } from "../providers/FavoritesContext";
 import { categoryColor } from "../models/categoryColor";
+import { toast } from "react-toastify";
 
 export const RecipeDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -56,6 +57,33 @@ export const RecipeDetailsPage = () => {
 
     load();
   }, [id, token, navigate]);
+
+    const handleDelete = async () => {
+    if (!token || !id) return;
+
+    const confirmed = window.confirm("Delete this recipe?");
+    if (!confirmed) return;
+
+    try {
+      const res = await fetch(`http://localhost:5113/api/recipes/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || `Error ${res.status}`);
+      }
+
+      toast.success("Recipe deleted");
+      navigate("/recipes");
+    } catch (err: any) {
+      console.error(err);
+      toast.error(err.message ?? "Failed to delete recipe");
+    }
+  };
 
   return (
     <Layout>
@@ -120,24 +148,38 @@ export const RecipeDetailsPage = () => {
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => toggleFavorite(recipe.id)}
-                    className="
-                      p-2 rounded-full
-                      bg-white/80 dark:bg-slate-800/80
-                      hover:bg-white dark:hover:bg-slate-700
-                      shadow transition
-                    "
-                  >
-                    <LuHeart
-                      size={20}
-                      className={
-                        isFavorite(recipe.id)
-                          ? "text-rose-500 fill-rose-500"
-                          : "text-slate-400"
-                      }
-                    />
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => toggleFavorite(recipe.id)}
+                      className="
+                        p-2 rounded-full
+                        bg-white/80 dark:bg-slate-800/80
+                        hover:bg-white dark:hover:bg-slate-700
+                        shadow transition
+                      "
+                    >
+                      <LuHeart
+                        size={20}
+                        className={
+                          isFavorite(recipe.id)
+                            ? "text-rose-500 fill-rose-500"
+                            : "text-slate-400"
+                        }
+                      />
+                    </button>
+
+                    <button
+                      onClick={handleDelete}
+                      className="
+                        p-2 rounded-full
+                        bg-white/80 dark:bg-slate-800/80
+                        hover:bg-red-50 dark:hover:bg-red-900/30
+                        shadow transition
+                      "
+                    >
+                      <LuTrash size={18} className="text-red-500" />
+                    </button>
+                  </div>
                 </div>
 
                 {recipe.description && (
