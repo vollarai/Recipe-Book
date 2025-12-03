@@ -1,7 +1,18 @@
-import { NavLink } from "react-router-dom";
-import { LuBookOpen, LuPlus, LuStar, LuUtensils} from "react-icons/lu";
+import { NavLink, useNavigate } from "react-router-dom";
+import { LuBookOpen, LuPlus, LuStar, LuHeart, LuUtensils, LuUser, LuLogOut } from "react-icons/lu";
+import { useUser } from "../providers/UserContext";
 
 export const LeftPanel = () => {
+  const { user, logout } = useUser();
+  const navigate = useNavigate();
+
+  const username = user?.userName;
+
+  const handleLogout = () => {
+    logout();        
+    navigate("/"); 
+  };
+  
   return (
     <aside className="hidden md:flex w-64 flex-col bg-slate-900 text-slate-50 p-6 gap-8">
       <div className="flex items-center gap-3">
@@ -52,7 +63,7 @@ export const LeftPanel = () => {
             }`
           }
         >
-          <LuStar size={18} />
+          <LuHeart size={18} />
           <span>Favorites</span>
         </NavLink>
 
@@ -70,6 +81,30 @@ export const LeftPanel = () => {
           <span>Profile</span>
         </NavLink>
       </nav>
+
+      <div className="mt-auto">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-3">
+            <LuUser size={18} className="text-slate-300" />
+            <span className="text-base font-semibold text-slate-100">
+              {username}
+            </span>
+          </div>
+
+          <button
+            onClick={handleLogout}
+            className="
+              flex items-center gap-2
+              text-sm font-medium
+              text-slate-400 hover:text-red-300 
+              transition
+            "
+          >
+            <LuLogOut size={16} />
+            Logout
+          </button>
+        </div>
+      </div>
     </aside>
   );
 };

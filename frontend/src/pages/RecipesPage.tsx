@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { useUser } from "../providers/UserContext";
 import type { Recipe } from "../models/recipe";
-import { LuSearch } from "react-icons/lu";
+import { LuSearch, LuUtensils, LuHeart } from "react-icons/lu";
+import { categoryColor } from "../models/categoryColor";
+import { useFavorites } from "../providers/FavoritesContext";
 
 type SortOrder = "newest" | "oldest";
 
@@ -17,11 +19,12 @@ export const RecipesPage = () => {
 
   const [search, setSearch] = useState("");
   const [sortOrder, setSortOrder] = useState<SortOrder>("newest");
+  const [categoryFilter, setCategoryFilter] = useState<Recipe["category"] | "All">("All");
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   useEffect(() => {
     if (!token) {
-      setError("You are not authorized");
-      setLoading(false);
+      navigate("/");
       return;
     }
 
@@ -63,6 +66,10 @@ export const RecipesPage = () => {
       );
     }
 
+    if (categoryFilter !== "All") {
+      list = list.filter((r) => r.category === categoryFilter);
+    }
+
     list.sort((a, b) => {
       const da = new Date(a.createdAt).getTime();
       const db = new Date(b.createdAt).getTime();
@@ -70,7 +77,7 @@ export const RecipesPage = () => {
     });
 
     return list;
-  }, [recipes, search, sortOrder]);
+  }, [recipes, search, sortOrder, categoryFilter]);
 
   return (
     <Layout>
@@ -116,19 +123,58 @@ export const RecipesPage = () => {
           </div>
 
           <div className="flex flex-wrap gap-2 text-xs">
-            <button className="rounded-full bg-slate-900 text-slate-50 px-3 py-1 dark:bg-slate-50 dark:text-slate-950">
+            <button
+              onClick={() => setCategoryFilter("All")}
+              className={`rounded-full px-3 py-1 ${
+                categoryFilter === "All"
+                  ? "bg-slate-900 text-slate-50 dark:bg-slate-50 dark:text-slate-950"
+                  : "bg-white border border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800"
+              }`}
+            >
               All
             </button>
-            <button className="rounded-full bg-white px-3 py-1 border border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800">
+
+            <button
+              onClick={() => setCategoryFilter("Breakfast")}
+              className={`rounded-full px-3 py-1 ${
+                categoryFilter === "Breakfast"
+                  ? "bg-slate-900 text-slate-50 dark:bg-slate-50 dark:text-slate-950"
+                  : "bg-white border border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800"
+              }`}
+            >
               Breakfast
             </button>
-            <button className="rounded-full bg-white px-3 py-1 border border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800">
+
+            <button
+              onClick={() => setCategoryFilter("Lunch")}
+              className={`rounded-full px-3 py-1 ${
+                categoryFilter === "Lunch"
+                  ? "bg-slate-900 text-slate-50 dark:bg-slate-50 dark:text-slate-950"
+                  : "bg-white border border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800"
+              }`}
+            >
               Lunch
             </button>
-            <button className="rounded-full bg-white px-3 py-1 border border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800">
+
+            <button
+              onClick={() => setCategoryFilter("Dinner")}
+              className={`rounded-full px-3 py-1 ${
+                categoryFilter === "Dinner"
+                  ? "bg-slate-900 text-slate-50 dark:bg-slate-50 dark:text-slate-950"
+                  : "bg-white border border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800"
+              }`}
+            >
               Dinner
             </button>
-            <button className="rounded-full bg-white px-3 py-1 border border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800">
+
+            <button
+              onClick={() => setCategoryFilter("Dessert")}
+              className={`rounded-full px-3 py-1 ${
+                categoryFilter === "Dessert"
+                  ? "bg-slate-900 text-slate-50 dark:bg-slate-50 dark:text-slate-950"
+                  : "bg-white border border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800"
+              }`}
+            >
               Dessert
             </button>
           </div>
@@ -146,7 +192,7 @@ export const RecipesPage = () => {
 
         {!loading && !error && filteredRecipes.length === 0 && (
           <div className="text-sm text-slate-500 dark:text-slate-400">
-            No recipes yet. Click “Add recipe” to create your first one.
+            No recipes yet. Click “Add recipe” to create.
           </div>
         )}
 
@@ -166,17 +212,26 @@ export const RecipesPage = () => {
                   />
                 ) : (
                   <div className="h-40 w-full bg-gradient-to-br from-emerald-200 to-sky-200 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center text-4xl">
-                    🍽️
+                    <LuUtensils className="text-slate-700 dark:text-slate-300" size={40} />
                   </div>
+                  
                 )}
+          
                 <div className="flex-1 p-4 space-y-2">
                   <div className="flex items-center justify-between gap-2">
                     <h2 className="text-base font-semibold text-slate-800 dark:text-slate-50">
                       {recipe.title}
                     </h2>
-                    <span className="rounded-full bg-emerald-50 px-2 py-[2px] text-[11px] text-emerald-700 border border-emerald-100 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/40">
-                      My recipe
-                    </span>
+                    {recipe.category && (
+                      <span
+                        className={`
+                          rounded-full px-2 py-[2px] text-[11px] border 
+                          border-transparent ${categoryColor[recipe.category] || "bg-slate-200 dark:bg-slate-700"}
+                        `}
+                      >
+                        {recipe.category}
+                      </span>
+                    )}
                   </div>
                   {recipe.description && (
                     <p className="text-xs text-slate-500 line-clamp-2 dark:text-slate-400">
@@ -187,6 +242,27 @@ export const RecipesPage = () => {
                     <span>
                       Created: {new Date(recipe.createdAt).toLocaleDateString()}
                     </span>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleFavorite(recipe.id);
+                      }}
+                      className="
+                        p-1.5 rounded-full
+                        bg-white/80 dark:bg-slate-800/80
+                        hover:bg-white dark:hover:bg-slate-700
+                        shadow transition
+                      "
+                    >
+                      <LuHeart
+                        size={18}
+                        className={
+                          isFavorite(recipe.id)
+                            ? "text-rose-500 fill-rose-500"
+                            : "text-slate-400"
+                        }
+                      />
+                    </button>
                   </div>
                 </div>
               </article>

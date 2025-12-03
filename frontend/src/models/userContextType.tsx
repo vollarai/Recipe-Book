@@ -5,4 +5,5 @@ export interface UserContextType {
   setUser: (u: User | null) => void;
   token: string | null;
   setToken: (t: string | null) => void;
+  logout: () => void;
 }

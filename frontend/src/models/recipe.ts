@@ -1,3 +1,5 @@
+import type { Category } from "./category";
+
 export type Recipe = {
   id: number;
   title: string;
@@ -6,5 +8,5 @@ export type Recipe = {
   steps?: string | null;
   createdAt: string;
   imageUrl?: string | null;
-  category: string;
+  category?: Category;
 };

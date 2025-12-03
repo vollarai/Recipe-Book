@@ -3,7 +3,7 @@ import { TopBar } from "./TopBar";
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex min-h-screen">
+    <div className="flex h-screen">
       <LeftPanel />
 
       <div className="flex-1 flex flex-col">

@@ -10,6 +10,7 @@ const createRecipeSchema = Yup.object().shape({
   description: Yup.string(),
   ingredients: Yup.string(),
   steps: Yup.string(),
+  category: Yup.string(),
 });
 
 export const AddRecipePage = () => {
@@ -64,63 +65,135 @@ export const AddRecipePage = () => {
 
   return (
     <Layout>
-      <div className="max-w-2xl mx-auto p-6">
-        <h1 className="text-2xl font-semibold mb-6 text-slate-900 dark:text-slate-100">
-          Add New Recipe
-        </h1>
-
-        <Formik
-          initialValues={initialValues}
-          validationSchema={createRecipeSchema}
-          onSubmit={handleSubmit}
-        >
-          {({ isSubmitting, setFieldValue }) => (
-            <Form className="flex flex-col gap-4">
-              <div>
-                <label className="block text-sm font-medium">Title</label>
-                <Field
-                  name="title"
-                  className="w-full rounded-md border px-3 py-2"
-                />
-                <ErrorMessage name="title" className="text-red-500 text-sm" component="div" />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium">Description</label>
-                <Field as="textarea" name="description" rows={3} className="w-full rounded-md border px-3 py-2" />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium">Ingredients</label>
-                <Field as="textarea" name="ingredients" rows={4} className="w-full rounded-md border px-3 py-2" />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium">Steps</label>
-                <Field as="textarea" name="steps" rows={5} className="w-full rounded-md border px-3 py-2" />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium">Image</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => setFieldValue("image", e.currentTarget.files?.[0] || null)}
-                  className="text-sm"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="mt-4 w-full rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white"
+      <div className="flex-1 bg-slate-50 dark:bg-slate-950">
+        <div className="max-w-3xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 shadow-sm">
+            <div className="p-6 sm:p-8">
+              <Formik
+                initialValues={initialValues}
+                validationSchema={createRecipeSchema}
+                onSubmit={handleSubmit}
               >
-                {isSubmitting ? "Saving..." : "Add Recipe"}
-              </button>
+                {({ isSubmitting, setFieldValue }) => (
+                  <Form className="space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
+                          Title<span className="text-red-500">*</span>
+                        </label>
+                        <Field
+                          name="title"
+                          className="w-full h-10 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                        />
+                        <ErrorMessage
+                          name="title"
+                          component="div"
+                          className="mt-1 text-xs text-red-500"
+                        />
+                      </div>
 
-            </Form>
-          )}
-        </Formik>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
+                          Category
+                        </label>
+                        <Field
+                          as="select"
+                          name="category"
+                          className="w-full h-10 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                        >
+                          <option value="">Select category</option>
+                          <option value="Breakfast">Breakfast</option>
+                          <option value="Lunch">Lunch</option>
+                          <option value="Dinner">Dinner</option>
+                          <option value="Dessert">Dessert</option>
+                          <option value="Snack">Snack</option>
+                        </Field>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
+                        Description
+                      </label>
+                      <Field
+                        as="textarea"
+                        name="description"
+                        rows={3}
+                        className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"
+                        placeholder="Short description of the recipe..."
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
+                        Ingredients
+                      </label>
+                      <Field
+                        as="textarea"
+                        name="ingredients"
+                        rows={4}
+                        className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                        placeholder="- 2 eggs&#10;- 200 ml milk&#10;- ..."
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
+                        Steps
+                      </label>
+                      <Field
+                        as="textarea"
+                        name="steps"
+                        rows={5}
+                        className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                        placeholder="Step 1: ...&#10;Step 2: ..."
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">
+                        Image
+                      </label>
+                      <label
+                        className="flex cursor-pointer items-center justify-between gap-3 rounded-lg border border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 px-3 py-2 text-sm text-slate-600 dark:text-slate-300"
+                      >
+                        <span>Click to upload or drag and drop</span>
+                        <span className="rounded-full bg-emerald-100 dark:bg-emerald-900/40 px-2 py-1 text-xs text-emerald-700 dark:text-emerald-300">
+                          Image file
+                        </span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) =>
+                            setFieldValue("image", e.currentTarget.files?.[0] || null)
+                          }
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+
+                    <div className="pt-2 flex justify-end gap-3">
+                      <button
+                        type="button"
+                        onClick={() => navigate("/recipes")}
+                        className="inline-flex items-center rounded-lg border border-slate-300 dark:border-slate-700 px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="inline-flex items-center rounded-lg bg-emerald-600 hover:bg-emerald-500 disabled:bg-emerald-600/70 px-4 py-2 text-sm font-medium text-white shadow-sm transition"
+                      >
+                        {isSubmitting ? "Saving..." : "Add recipe"}
+                      </button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+            </div>
+          </div>
+        </div>
       </div>
     </Layout>
   );

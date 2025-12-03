@@ -28,11 +28,10 @@ export const LoginPage = () => {
     try {
       const res = await login(values); 
 
-      setUser({
-        id: res.id,
-        email: res.email,
-        userName: res.userName || "",
-      });
+      setUser({ 
+        id: res.id, 
+        email: res.email, 
+        userName: res.userName || "", });
 
       setToken(res.token);
       localStorage.setItem("token", res.token); 
@@ -45,7 +44,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-800">
+    <div className="flex min-h-screen items-center justify-center bg-slate-900">
       <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-xl">
         <h1 className="mb-6 text-center text-2xl font-semibold text-slate-800">
           Login

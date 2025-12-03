@@ -43,7 +43,7 @@ export const RegisterPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-800">
+    <div className="flex min-h-screen items-center justify-center bg-slate-900">
       <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-xl">
         <h1 className="mb-6 text-center text-2xl font-semibold text-slate-800">
           Register

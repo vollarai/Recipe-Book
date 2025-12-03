@@ -10,7 +10,7 @@ export const TopBar = () => {
   const title = pageTitles[location.pathname] || "Recipe Book";
 
   return (
-    <header className="flex items-center justify-between gap-4 bg-white px-4 py-3 shadow-sm border-b border-slate-200 dark:bg-slate-900 dark:border-slate-800">
+    <header className="flex items-center justify-between sticky top-0 gap-4 bg-white px-4 py-3 shadow-sm border-b border-slate-200 dark:bg-slate-900 dark:border-slate-800">
 
       <div className="flex flex-col gap-1">
         <h1 className="text-lg md:text-xl font-semibold text-slate-900 dark:text-slate-50">
