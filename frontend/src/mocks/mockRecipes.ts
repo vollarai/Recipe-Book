@@ -37,7 +37,7 @@ export const mockRecipes: Recipe[] = [
         3. Cook soft-boiled eggs (6–7 minutes).
         4. Spread avocado on toast, top with egg and chili flakes.`,
     category: "Breakfast",
-    imageUrl: "images/toast.jpg",
+    imageUrl: "images/av.jpg",
     createdAt: "2025-02-01T12:00:00Z",
   },
   {
@@ -99,7 +99,7 @@ export const mockRecipes: Recipe[] = [
         4. Blend until smooth.
         5. Serve with fresh basil.`,
     category: "Dinner",
-    imageUrl: "images/soup.jpg",
+    imageUrl: "images/soupb.jpg",
     createdAt: "2025-05-04T18:45:00Z",
     },
     {
@@ -119,7 +119,7 @@ export const mockRecipes: Recipe[] = [
         3. Cook 2 minutes per side until golden.
         4. Serve with berries and honey.`,
     category: "Breakfast",
-    imageUrl: "images/pancakes.jpg",
+    imageUrl: "images/pancakeb.jpg",
     createdAt: "2025-06-06T08:20:00Z",
     },
     {
@@ -140,7 +140,7 @@ export const mockRecipes: Recipe[] = [
         3. Add olive oil, lemon juice and seasoning.
         4. Serve chilled.`,
     category: "Lunch",
-    imageUrl: "images/salad.jpg",
+    imageUrl: "images/saladq.jpg",
     createdAt: "2025-01-08T12:40:00Z",
     },
     {
@@ -158,7 +158,7 @@ export const mockRecipes: Recipe[] = [
         2. Spread mixture onto toasted bread.
         3. Cut in half and serve.`,
     category: "Lunch",
-    imageUrl: "images/tuna.jpg",
+    imageUrl: "images/tunas.jpg",
     createdAt: "2025-08-09T13:05:00Z",
     },
     {
@@ -177,7 +177,7 @@ export const mockRecipes: Recipe[] = [
         3. Top with lemon slices.
         4. Bake for 15 minutes at 200°C.`,
     category: "Dinner",
-    imageUrl: "images/salmon.jpg",
+    imageUrl: "images/salmonb.jpg",
     createdAt: "2025-09-11T20:15:00Z",
     },
     {
@@ -195,7 +195,7 @@ export const mockRecipes: Recipe[] = [
         2. Mix oats with butter to make crumble.
         3. Bake apples with crumble topping for 25 minutes.`,
     category: "Dessert",
-    imageUrl: "images/crumble.jpg",
+    imageUrl: "images/crumblee.jpg",
     createdAt: "2025-01-19T18:10:00Z",
     },
 ];
