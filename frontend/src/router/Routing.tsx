@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { LoginPage } from "../pages/LoginPage";
 import { RegisterPage } from "../pages/RegisterPage";
 import { RecipesPage } from "../pages/RecipesPage";
@@ -7,11 +7,13 @@ import { FavoritesPage } from "../pages/FavoritesPage";
 import { RecipeDetailsPage } from "../pages/RecipeDetailsPage";
 import { ProfilePage } from "../pages/ProfilePage";
 import { EditRecipePage } from "../pages/EditRecipePage";
+import { useMock } from "../utils/config";
 
 export const Routing = () => {
+  const isMock = useMock;
   return (
       <Routes>
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/" element={ isMock ? ( <Navigate to="/recipes" replace /> ) : (<LoginPage />)}/>
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/recipes" element={<RecipesPage />} />
         <Route path="/add" element={<AddRecipePage />} />
