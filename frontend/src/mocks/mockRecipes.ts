@@ -119,7 +119,7 @@ export const mockRecipes: Recipe[] = [
         3. Cook 2 minutes per side until golden.
         4. Serve with berries and honey.`,
     category: "Breakfast",
-    imageUrl: "images/pancakes.jpg",
+    imageUrl: "public/images/pancakes.jpg",
     createdAt: "2025-06-06T08:20:00Z",
     },
     {
