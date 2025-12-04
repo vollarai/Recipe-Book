@@ -34,7 +34,7 @@ attempted value: ${h}
         - olive oil`,steps:`1. Toast the bread.
         2. Mash avocado with salt and pepper.
         3. Cook soft-boiled eggs (6–7 minutes).
-        4. Spread avocado on toast, top with egg and chili flakes.`,category:"Breakfast",imageUrl:"images/av.jpg",createdAt:"2025-02-01T12:00:00Z"},{id:3,title:"Chocolate Lava Cake",description:"Warm chocolate cake with a gooey molten center. Perfect dessert for guests.",ingredients:`- 100 g dark chocolate
+        4. Spread avocado on toast, top with egg and chili flakes.`,category:"Breakfast",imageUrl:"images/avocado.jpg",createdAt:"2025-02-01T12:00:00Z"},{id:3,title:"Chocolate Lava Cake",description:"Warm chocolate cake with a gooey molten center. Perfect dessert for guests.",ingredients:`- 100 g dark chocolate
         - 80 g butter
         - 2 eggs
         - 2 egg yolks
