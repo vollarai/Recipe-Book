@@ -37,7 +37,7 @@ export const mockRecipes: Recipe[] = [
         3. Cook soft-boiled eggs (6–7 minutes).
         4. Spread avocado on toast, top with egg and chili flakes.`,
     category: "Breakfast",
-    imageUrl: "images/av.jpg",
+    imageUrl: "images/avocado.jpg",
     createdAt: "2025-02-01T12:00:00Z",
   },
   {
