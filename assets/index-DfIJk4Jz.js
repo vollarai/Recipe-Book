@@ -68,7 +68,7 @@ attempted value: ${h}
         - berries for topping`,steps:`1. Blend banana, oats and eggs into a smooth batter.
         2. Heat a pan and pour small portions of batter.
         3. Cook 2 minutes per side until golden.
-        4. Serve with berries and honey.`,category:"Breakfast",imageUrl:"images/pancakesb.jpg",createdAt:"2025-06-06T08:20:00Z"},{id:7,title:"Quinoa Salad Bowl",description:"Fresh and colorful quinoa salad with vegetables and lemon dressing.",ingredients:`- 150 g cooked quinoa
+        4. Serve with berries and honey.`,category:"Breakfast",imageUrl:"images/pancake.jpg",createdAt:"2025-06-06T08:20:00Z"},{id:7,title:"Quinoa Salad Bowl",description:"Fresh and colorful quinoa salad with vegetables and lemon dressing.",ingredients:`- 150 g cooked quinoa
         - 1 cucumber
         - 1 tomato
         - 1 avocado
