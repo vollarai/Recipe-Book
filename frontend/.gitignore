@@ -1,0 +1,14 @@
+backend/bin/
+backend/obj/
+
+backend/appsettings*.json
+
+logs/
+*.log
+
+node_modules/
+dist/
+build/
+
+.env
+.env.local
