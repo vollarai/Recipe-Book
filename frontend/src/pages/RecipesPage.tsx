@@ -215,7 +215,7 @@ export const RecipesPage = () => {
                   <img
                     src={
                       useMock
-                        ? `${import.meta.env.BASE_URL}${recipe.imageUrl.replace(/^\//, "")}`
+                        ? new URL(recipe.imageUrl, import.meta.env.BASE_URL).toString()
                         : `${API_URL}${recipe.imageUrl}`
                     }
                     alt={recipe.title}
