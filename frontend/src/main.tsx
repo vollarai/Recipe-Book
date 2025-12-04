@@ -10,7 +10,7 @@ import { FavoritesProvider } from './providers/FavoritesContext.tsx';
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/Recipe_Book">
       <UserProvider>
         <ThemeProvider>
           <FavoritesProvider>
