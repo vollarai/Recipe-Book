@@ -141,7 +141,11 @@ export const RecipeDetailsPage = () => {
             <article className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
               {recipe.imageUrl ? (
                 <img
-                  src={useMock ? recipe.imageUrl : `${API_URL}${recipe.imageUrl}`}
+                  src={
+                    useMock
+                      ? `${import.meta.env.BASE_URL}${recipe.imageUrl.replace(/^\//, "")}`
+                      : `${API_URL}${recipe.imageUrl}`
+                  }
                   alt={recipe.title}
                   className="h-64 w-full object-cover"
                 />

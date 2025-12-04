@@ -5,17 +5,26 @@ import { useUser } from "../providers/UserContext";
 import type { Recipe } from "../models/recipe";
 import { useFavorites } from "../providers/FavoritesContext";
 import { LuUser, LuMail, LuUtensils, LuHeart, LuLayers } from "react-icons/lu";
+import { useMock, API_URL } from "../utils/config";
+import { mockRecipes } from "../mocks/mockRecipes";
 
 export const ProfilePage = () => {
   const { user, token } = useUser();
   const { isFavorite } = useFavorites();
   const navigate = useNavigate();
+  const isMock = useMock;
 
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (isMock) {
+      setRecipes(mockRecipes);
+      setLoading(false);
+      return;
+    }
+
     if (!token) {
       navigate("/");
       return;
@@ -23,7 +32,7 @@ export const ProfilePage = () => {
 
     const load = async () => {
       try {
-        const res = await fetch("http://localhost:5113/api/recipes", {
+        const res = await fetch(`${API_URL}/api/recipes`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -45,19 +54,23 @@ export const ProfilePage = () => {
     };
 
     load();
-  }, [token, navigate]);
+  }, [isMock, token, navigate]);
 
   const totalRecipes = recipes.length;
+
   const favoriteCount = useMemo(
     () => recipes.filter((r) => isFavorite(r.id)).length,
     [recipes, isFavorite]
   );
 
   const recentRecipes = useMemo(
-    () => [...recipes].sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    ).slice(0, 5),
+    () =>
+      [...recipes]
+        .sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        )
+        .slice(0, 5),
     [recipes]
   );
 
@@ -70,7 +83,7 @@ export const ProfilePage = () => {
               <LuUser size={56} className="text-slate-300 dark:text-slate-400" />
               <div>
                 <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-50">
-                  {user?.userName || "User"}
+                  {user?.userName || user?.userName || "User"}
                 </h1>
                 <div className="mt-1 flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
                   <LuMail size={14} />
@@ -121,19 +134,23 @@ export const ProfilePage = () => {
                   </p>
                   <p className="mt-1 text-2xl font-semibold text-slate-900 dark:text-slate-50">
                     {
-                        new Set(
-                            recipes
-                            .map((r) => r.category)
-                            .filter(
-                                (c): c is NonNullable<Recipe["category"]> => Boolean(c)
-                            )
-                        ).size
+                      new Set(
+                        recipes
+                          .map((r) => r.category)
+                          .filter(
+                            (c): c is NonNullable<Recipe["category"]> =>
+                              Boolean(c)
+                          )
+                      ).size
                     }
                   </p>
                 </div>
                 <div className="rounded-full bg-indigo-100 dark:bg-indigo-900/40">
-                    <LuLayers className="text-indigo-600 dark:text-indigo-300" size={24} />
-                  </div>
+                  <LuLayers
+                    className="text-indigo-600 dark:text-indigo-300"
+                    size={24}
+                  />
+                </div>
               </div>
             </div>
           </section>
