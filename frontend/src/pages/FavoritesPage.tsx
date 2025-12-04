@@ -102,7 +102,7 @@ export const FavoritesPage = () => {
                   <img
                     src={
                       useMock
-                        ? new URL(recipe.imageUrl, import.meta.env.BASE_URL).toString()
+                        ? `${import.meta.env.BASE_URL}${recipe.imageUrl}`
                         : `${API_URL}${recipe.imageUrl}`
                     }
                     alt={recipe.title}

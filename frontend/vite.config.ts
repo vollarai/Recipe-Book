@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "Recipe_Book",
+  base: "Recipe_Book/",
   build: {
     outDir: "dist",  
   },
