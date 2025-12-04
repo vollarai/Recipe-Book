@@ -31,7 +31,7 @@ export const RecipesPage = () => {
       return;
     }
 
-    if (!token) {
+    if (!useMock && !token) {
       navigate("/");
       return;
     }

@@ -25,7 +25,7 @@ export const FavoritesPage = () => {
       return;
     }
 
-    if (!token) {
+    if (!useMock && !token) {
       setError("You are not authorized");
       setLoading(false);
       return;

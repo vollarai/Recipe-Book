@@ -10,9 +10,8 @@ const UserContext = createContext<UserContextType | null>(null);
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [tokenState, setTokenState] = useState<string | null>(() => {
     if (useMock) {
-      return "MOCK_TOKEN";
+      return "DEMO_TOKEN";
     }
-
     return localStorage.getItem("token");
   });
 
@@ -23,6 +22,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
     const raw = localStorage.getItem("user");
     if (!raw) return null;
+
     try {
       return JSON.parse(raw) as User;
     } catch {
@@ -46,7 +46,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const setToken = (newToken: string | null) => {
     if (useMock) {
-      setTokenState("MOCK_TOKEN");
+      setTokenState("DEMO_TOKEN");
       return;
     }
 
@@ -68,7 +68,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user:userState, setUser, token: tokenState, setToken, logout }}>
+    <UserContext.Provider value={{ user: userState, setUser, token: tokenState, setToken, logout }}>
       {children}
     </UserContext.Provider>
   );

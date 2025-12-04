@@ -21,7 +21,7 @@ export const RecipeDetailsPage = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!id) {
+    if (!useMock && !id) {
       setError("Recipe not found");
       setLoading(false);
       return;

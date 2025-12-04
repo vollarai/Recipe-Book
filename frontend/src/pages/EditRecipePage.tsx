@@ -50,7 +50,7 @@ export const EditRecipePage = () => {
       return;
     }
 
-    if (!token) {
+    if (!useMock && !token) {
       navigate("/");
       return;
     }
