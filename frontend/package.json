@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist -b gh-pages -r origin"
+    "deploy": "gh-pages -d dist -b gh-pages"
   },
   "dependencies": {
     "formik": "^2.4.9",
