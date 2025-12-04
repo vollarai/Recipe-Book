@@ -4,13 +4,7 @@ import { Layout } from "../components/Layout";
 import { useUser } from "../providers/UserContext";
 import type { Recipe } from "../models/recipe";
 import { useFavorites } from "../providers/FavoritesContext";
-import {
-  LuUser,
-  LuMail,
-  LuUtensils,
-  LuHeart,
-  LuLayers,
-} from "react-icons/lu";
+import { LuUser, LuMail, LuUtensils, LuHeart, LuLayers } from "react-icons/lu";
 
 export const ProfilePage = () => {
   const { user, token } = useUser();
@@ -63,14 +57,14 @@ export const ProfilePage = () => {
     () => [...recipes].sort(
       (a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    ).slice(0, 3),
+    ).slice(0, 5),
     [recipes]
   );
 
   return (
     <Layout>
       <main className="flex-1 p-4 md:p-6 bg-slate-100 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-        <div className="max-w-4xl mx-auto space-y-6">
+        <div className="max-w-5xl mx-auto space-y-6">
           <section className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-4">
               <LuUser size={56} className="text-slate-300 dark:text-slate-400" />

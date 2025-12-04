@@ -6,6 +6,7 @@ import { AddRecipePage } from "../pages/AddRecipePage";
 import { FavoritesPage } from "../pages/FavoritesPage";
 import { RecipeDetailsPage } from "../pages/RecipeDetailsPage";
 import { ProfilePage } from "../pages/ProfilePage";
+import { EditRecipePage } from "../pages/EditRecipePage";
 
 export const Routing = () => {
   return (
@@ -17,6 +18,7 @@ export const Routing = () => {
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/recipes/:id" element={<RecipeDetailsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/recipes/:id/edit" element={<EditRecipePage />} />
       </Routes>
   );
 };

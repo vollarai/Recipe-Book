@@ -1,30 +1,21 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
 import { toast } from "react-toastify";
 import { useUser } from "../providers/UserContext";
-
-interface LoginFormValues {
-  email: string;
-  password: string;
-}
-
-const loginSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.string().required("Password is required"),
-});
+import { loginSchema } from "../models/loginSchema";
+import type { LoginRequest } from "../models/loginRequest";
 
 export const LoginPage = () => {
   const { setUser, setToken } = useUser();
   const navigate = useNavigate();
 
-  const initialValues: LoginFormValues = {
+  const initialValues: LoginRequest = {
     email: "",
     password: "",
   };
 
-  const handleSubmit = async (values: LoginFormValues) => {
+  const handleSubmit = async (values: LoginRequest) => {
     try {
       const res = await login(values); 
 

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { useUser } from "../providers/UserContext";
 import type { Recipe } from "../models/recipe";
-import { LuUtensils, LuHeart, LuArrowLeft, LuTrash } from "react-icons/lu";
+import { LuUtensils, LuHeart, LuArrowLeft, LuTrash, LuPencil } from "react-icons/lu";
 import { useFavorites } from "../providers/FavoritesContext";
 import { categoryColor } from "../models/categoryColor";
 import { toast } from "react-toastify";
@@ -85,12 +85,17 @@ export const RecipeDetailsPage = () => {
     }
   };
 
+    const handleEdit = () => {
+      if (!id) return;
+      navigate(`/recipes/${id}/edit`);
+    };
+
   return (
     <Layout>
       <main className="flex-1 p-4 md:p-6 bg-slate-100 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
         <div className="max-w-3xl mx-auto space-y-4">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/recipes")}
             className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-300 transition mb-2"
           >
             <LuArrowLeft size={16} />
@@ -178,6 +183,18 @@ export const RecipeDetailsPage = () => {
                       "
                     >
                       <LuTrash size={18} className="text-red-500" />
+                    </button>
+
+                    <button
+                      onClick={handleEdit}
+                      className="
+                        p-2 rounded-full
+                        bg-white/80 dark:bg-slate-800/80
+                        hover:bg-white dark:hover:bg-slate-700
+                        shadow transition
+                      "
+                    >
+                      <LuPencil size={18} className="text-slate-400" />
                     </button>
                   </div>
                 </div>

@@ -1,33 +1,20 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { register } from "../api/auth";
 import { toast } from "react-toastify";
-
-interface RegisterFormValues {
-  userName: string;
-  email: string;
-  password: string;
-}
-
-const registerSchema = Yup.object().shape({
-  userName: Yup.string().required("Username is required"),
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
-    .required("Password is required"),
-});
+import type { RegisterRequest } from "../models/registerRequest";
+import { registerSchema } from "../models/registerSchema";
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
 
-  const initialValues: RegisterFormValues = {
+  const initialValues: RegisterRequest = {
     userName: "",
     email: "",
     password: "",
   };
 
-  const handleSubmit = async (values: RegisterFormValues) => {
+  const handleSubmit = async (values: RegisterRequest) => {
     try {
       await register({
         email: values.email,

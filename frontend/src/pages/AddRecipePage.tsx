@@ -1,30 +1,14 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { useUser } from "../providers/UserContext";
 import { toast } from "react-toastify";
-
-const createRecipeSchema = Yup.object().shape({
-  title: Yup.string().required("Title is required"),
-  description: Yup.string(),
-  ingredients: Yup.string(),
-  steps: Yup.string(),
-  category: Yup.string(),
-});
+import { recipeSchema } from "../models/recipeSchema";
+import { initialValues } from "../models/initialValues";
 
 export const AddRecipePage = () => {
   const navigate = useNavigate();
   const { token } = useUser();
-
-  const initialValues = {
-    title: "",
-    description: "",
-    ingredients: "",
-    steps: "",
-    category: "",
-    image: null as File | null,
-  };
 
   const handleSubmit = async (values: typeof initialValues) => {
     try {
@@ -66,12 +50,12 @@ export const AddRecipePage = () => {
   return (
     <Layout>
       <div className="flex-1 bg-slate-50 dark:bg-slate-950">
-        <div className="max-w-3xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
           <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 shadow-sm">
             <div className="p-6 sm:p-8">
               <Formik
                 initialValues={initialValues}
-                validationSchema={createRecipeSchema}
+                validationSchema={recipeSchema}
                 onSubmit={handleSubmit}
               >
                 {({ isSubmitting, setFieldValue }) => (

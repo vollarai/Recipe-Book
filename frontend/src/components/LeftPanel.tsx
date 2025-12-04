@@ -14,7 +14,7 @@ export const LeftPanel = () => {
   };
   
   return (
-    <aside className="hidden md:flex w-64 flex-col bg-slate-900 text-slate-50 p-6 gap-8">
+    <div className="sticky top-0 h-screen overflow-y-auto md:flex p-6 flex-col bg-slate-900 text-slate-50 gap-8">
       <div className="flex items-center gap-3">
         <div className="h-10 w-10 rounded-2xl bg-emerald-500 flex items-center justify-center text-xl">
           <LuUtensils size={20} className="text-white" />
@@ -105,6 +105,6 @@ export const LeftPanel = () => {
           </button>
         </div>
       </div>
-    </aside>
+    </div>
   );
 };
